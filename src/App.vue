@@ -1,18 +1,38 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <HeaderComp />
+    <div class="d-flex flex-wrap rows mt-5 justify-content-center">
+      <MainComp v-for="(element, index) in AlbumCop" :key="index" :Album="element" />
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-//import axios from 'axios'
+import HeaderComp from './components/HeaderComp.vue'
+import MainComp from './components/MainComp.vue'
+import axios from 'axios'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    HeaderComp,
+    MainComp,
+  },
+  data(){
+    return{
+      AlbumCop: '',
+    }
+  },
+  mounted(){
+    this.getAlbum();
+  },
+  methods: {
+    getAlbum(){
+      axios.get('https://flynn.boolean.careers/exercises/api/array/music')
+      .then((response) =>{
+        this.AlbumCop = response.data.response;
+      });
+    }
   }
 }
 </script>
@@ -20,10 +40,13 @@ export default {
 <style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  background-color: #1E2D3B;
+  height: 100vh;
+  
+  .rows{
+    width: 60%;
+    margin: auto;
+  }
 }
 </style>
