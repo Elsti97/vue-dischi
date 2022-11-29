@@ -1,6 +1,5 @@
 <template>
   <div class="bg-header">
-
   </div>
 </template>
 
